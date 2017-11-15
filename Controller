@@ -1,0 +1,188 @@
+                Controller login
+                
+    <?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Login extends CI_Controller {
+	function __construct(){
+		parent::__construct();
+		$this->load->model('helpdesk/model_usuario');
+
+	}
+
+	function index(){
+		$this->load->view('helpdesk/login');
+		
+	}
+
+	public function usuario_data(){
+		header('Content-type: application/json');
+
+		$codigo = $this->input->post('codigo');
+		$clave = $this->input->post('clave');
+
+		$usuarios = $this->model_usuario->get_usuario($codigo,$clave);
+
+		if($usuarios){
+			$success = true;		
+		
+			foreach ($usuarios as $usuario) {
+				$nombres = $usuario['nombres'];
+				$apellidos = $usuario['apellidos'];
+			}
+
+			// crear vector asociativo de retorno para datos del usuario
+			$items = array(
+				'nombres' => $nombres,
+				'apellidos' => $apellidos
+			);
+
+			echo json_encode(array('success'=>$success,'nombres'=>$nombres,'apellidos'=>$apellidos,'items'=>$items));
+
+		}else {
+			$success = false;
+
+			echo json_encode(array('success'=>$success));
+
+		}
+	}
+
+}
+
+?>
+
+                                            Controller reque
+                                            
+      <?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Reque extends CI_Controller {
+	function __construct(){
+		parent::__construct();
+		$this->load->model('helpdesk/model_reque');
+
+	}
+
+	function index(){		
+		$data['usuarios'] = array(
+			'codigo' => '10004926',
+			'nombres' => 'Carlos Mario',
+			'apellidos' => 'Vanegas Toro'
+		);
+		
+		$this->load->view('helpdesk/reque', $data);
+		
+	}
+
+	public function grabarReque(){
+		$codigo = $this->input->post('codigo');
+		$fecha = $this->input->post('fecha');
+		$hora = $this->input->post('hora');
+		$descri = $this->input->post('descri');
+
+		$data = array(
+			'codigo' => $codigo,
+			'fecha' => $fecha,
+			'hora' => $hora,
+			'descri' => $descri
+		);
+
+		$success = $this->model_reque->grabarRegistro($data);		
+
+		echo json_encode(array('success'=>$success));
+
+
+	}
+}
+
+?>	
+
+                          Controller operador
+                          
+      <?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Operador extends CI_Controller {
+	function __construct(){
+		parent::__construct();
+		$this->load->model('helpdesk/model_reque');
+
+	}
+
+	function index(){
+		$data['usuario'] = array(
+			'codigo' => '91256362',
+			'nombres' => 'Hector Manuel',
+			'apellidos' => 'Patino Torres'
+		);
+
+		$this->load->view('helpdesk/operador', $data);
+		
+	}
+
+	public function listarReque(){
+		header('Content-type: application/json');
+    	echo json_encode($this->model_reque->listarRegistros());
+
+	}
+}
+
+?>
+
+                    Controller prueba
+                    
+    <?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Prueba extends CI_Controller {
+	function __construct(){
+		parent::__construct();
+		$this->load->model('model_demo');
+
+	}
+
+	function index(){
+		$this->load->view('prueba');
+	}
+
+	public function ambil_data(){
+		header('Content-type: application/json');
+    	echo json_encode($this->model_demo->get_data());
+	}
+
+	public function usuario_data(){
+		header('Content-type: application/json');
+
+		$codigo = $this->input->post('codigo');
+
+		$usuarios = $this->model_demo->get_usuario($codigo);
+
+		if($usuarios){
+			$success = true;		
+		
+			foreach ($usuarios as $usuario) {
+				$nombres = $usuario['nombres'];
+				$apellidos = $usuario['apellidos'];
+			}
+
+			
+			$items = array(
+				'nombres' => $nombres,
+				'apellidos' => $apellidos
+			);
+
+			echo json_encode(array('success'=>$success,'nombres'=>$nombres,'apellidos'=>$apellidos,'items'=>$items));
+
+		}else {
+			$success = false;
+
+			echo json_encode(array('success'=>$success));
+
+		}
+
+		
+		
+
+    	
+
+    	//echo json_encode($this->model_demo->get_usuario());
+	}
+}
+
+?>
