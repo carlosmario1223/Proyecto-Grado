@@ -1,430 +1,47 @@
                                                    View login
                 
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-	<title>HelpDesk - login</title>
-	<link href="http://localhost/proyecto/imagenes/helpdesk-ico-rev.ico" type="image/x-icon" rel="shortcut icon" />
-	<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/default/easyui.css">		
-	<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/icon.css">
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/locale/easyui-lang-es.js"></script>
-   	
-	<link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/helpdesk.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/login.css">
+  <head>
+    <title>HelpDesk - login</title>
+    <link href="http://localhost/proyecto/imagenes/helpdesk-ico-rev.ico" type="image/x-icon" rel="shortcut icon" />
+    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/default/easyui.css">   
+    <link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/icon.css">
+    <script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/locale/easyui-lang-es.js"></script>
+    <link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/helpdesk.css">
+    <link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/login.css">
+  </head>
+  <body>
+    <div class="encabeza">
+      <table id="enc-tabla">
+        <tr>
+          <td id="enc-tabla-izq"><span class="titulo">JD sistemas</span></td>        
+        </tr>
+      </table>
+    </div>
+    
+    <div class="logo">    
+      <img src="http://localhost/proyecto/imagenes/hd-logo-rev.png">
+    </div>
 
-</head>
-<body>
-	<div class="encabeza">
-		<table id="enc-tabla">
-			<tr>
-				<td id="enc-tabla-izq"><span class="titulo">JD sistemas</span></td>
-				<td id="enc-tabla-cen"><span class="titulo">BIENVENIDOS</span></td>
-				<td id="enc-tabla-der">
-					<label>Usuario:</label>
-					<input id="usuario-fullname" name="usuario-fullname" class="easyui-textbox" value=""
-						data-options="disabled:true">					
-				</td>
-			</tr>
-		</table>
-	</div>
-	
-	<div class="logo">		
-		<img src="http://localhost/proyecto/imagenes/hd-logo-rev.png">
-	</div>
-
-	<div class="usuario-div">		
-		<!-- PANEL para captura de datos -jeasyui - /////////////////////////////////////////////// -->
-		<div id="usuario-pnl" class="easyui-panel" title="ACCESO" 
-			data-options="collapsible:true">
-
-			<form id="usuario-frm">
-				<div class="fitem">
-					<label>USUARIO:</label>
-					<input id="codigo" name="codigo" class="easyui-textbox" value=""
-						data-options="prompt:'digitar CODIGO',iconCls:'icon-man'">
-				</div>
-
-				<div class="fitem">
-					<label>CLAVE:</label>
-					<input id="clave" name="clave" class="easyui-textbox" type="password" 
-						data-options="prompt:'digitar CLAVE',iconCls:'icon-lock'" >
-				</div>
-
-			</form>
-
-			<!-- BOTON de acceso al sistema /////////////////////////////////////////////////////// -->
-			<a href="#" id="usuario-btn" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="validarUsuario()">
-				<span>OK</span>
-			</a>
-
-		</div>
-	</div>
-	
-	<script type="text/javascript">
-		function validarUsuario(){
-			var xcodigo = $("#codigo").textbox('getValue');
-			var xclave = $("#clave").textbox('getValue');
-
-			$.post('login/usuario_data',
-				{codigo:xcodigo, clave:xclave},
-				function(result){
-					if(result.success){
-						var row = result.items;
-						var xnombres = row['nombres'];
-						var xapellidos = row['apellidos'];
-
-						var xfullname = xnombres + xapellidos;
-
-						$.messager.alert("Mensaje", "Holai!! "+xfullname);
-
-						// asignar a campo fullname
-						$("#usuario-fullname").textbox('setValue', xfullname);
-
-
-					}else {
-						$.messager.alert("Mensaje", "no EXISTE Usuario!!!");
-					}
-
-					// limpiar el formulario de usuario 
-					$("#usuario-frm").form('clear');
-
-				},
-			'json');
-
-		}
-
-	</script>	
-</body>
-</html>
-
-                                    View requerimeiento
-                                    
- <!DOCTYPE html>
-<html>
-<head>
-	<title>HelpDesk - Reque</title>
-	<link href="http://localhost/proyecto/imagenes/helpdesk-ico-rev.ico" type="image/x-icon" rel="shortcut icon" />
-	<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/default/easyui.css">		
-	<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/icon.css">
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/locale/easyui-lang-es.js"></script>
-   	
-	<link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/helpdesk.css">	
-	<link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/reque.css">	
-
-</head>
-<body>
-	<div class="encabeza">
-		<table id="enc-tabla">
-			<tr>
-				<td id="enc-tabla-izq"><span class="titulo">JD sistemas</span></td>
-				<td id="enc-tabla-cen"><span class="titulo">Help Desk - REQUERIMIENTOS</span></td>
-				<td id="enc-tabla-der">
-
-					<!-- DIV para manejo de variables globales que no sean mostradas ////////////// -->
-					<div style="display:none">
-						<input id="codigo" name="codigo" class="easyui-textbox" 
-							value="<?= $usuario['codigo'] ?>"
-							data-options="disabled:true">						
-					</div>
-					<!-- ////////////////////////////////////////////////////////////////////////// -->
-
-					<label>Usuario:</label>
-					<input id="usuario-fullname" name="usuario-fullname" class="easyui-textbox" 
-						value="<?= $usuario['nombres'].' '.$usuario['apellidos'] ?>"
-						data-options="disabled:true">					
-				</td>
-			</tr>
-		</table>
-	</div>
-
-	<!-- DIV logo de helpdesk ///////////////////////////////////////////////////////////////////// -->
-	<div class="logo-div">
-		<img src="http://localhost/proyecto/imagenes/helpdesk-ico-rev.png">	
-	</div>
-	
-	<!-- DIV formulario de datos para requerimiento /////////////////////////////////////////////// -->
-	<div class="formulario-div">
-		<form id="formulario-reque">
-			<!-- LINEA 1 - fecha y hora del requerimienro ///////////////////////////////////////// -->
-			<div class="fitem">
-				<label>Fecha:</label>
-				<input id="fecha" name="fecha" class="easyui-datebox" 			 
-					data-options="disabled:true,formatter:myformatter,parser:myparser" 
-				>
-				<label>Hora:</label>
-				<input id="hora" name="hora" class="easyui-timespinner"		 
-					data-options="disabled:true" 
-				>
-				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-clock'" onclick="quehora()"></a>
-			</div>
-
-			<div class="ftitle">DESCRIPCION (no exagere...)</div>
-			<!-- LINEA 2 - descripcion del requerimiento ////////////////////////////////////////// -->
-			<div class="fitem">
-				<label></label>
-				<input id="descripcion" name="descripcion" class="easyui-textbox" " style="height: 150px"
-					data-options="disabled:true,multiline:true" >
-			</div>
-		</form>		
-	</div>
-
-	<!-- DIV botonera para administracion ///////////////////////////////////////////////////////// -->
-	<div class="botonera-div">
-		<div class="botonera-div-izq">
-			<a href="#" id="btnNuevo" class="easyui-linkbutton" 
-				data-options="iconCls:'icon-add'" onclick="nuevo()">
-				<span>Nuevo</span>
-			</a>			
-		</div>
-		<div class="botonera-div-der">
-			<a href="#" id="btnCancelar" class="easyui-linkbutton" 
-				data-options="disabled:true,iconCls:'icon-cancel'" onclick="cancelar()">
-				<span>cancelar</span>
-			</a>
-			<a href="#" id="btnGrabar" class="easyui-linkbutton" 
-				data-options="disabled:true,iconCls:'icon-save'" onclick="grabar()">
-				<span>grabar</span>
-			</a>
-
-		</div>
-		
-	</div>
-
-	<!-- SCRIPT funciones para procesos generales ///////////////////////////////////////////////// -->	
-	<!-- funciones grabar (la sacamos aparte por su importante para codeignieter ) //////////////// -->
-	<script type="text/javascript">
-		function grabar(){
-			var xcodigo = $("#codigo").textbox('getValue');
-			var xfecha = $("#fecha").datebox('getValue');
-			var xhora = $("#hora").timespinner('getValue');			
-			var xdescri = $("#descripcion").textbox('getValue');			
-			
-			$.post('reque/grabarReque',
-				{codigo:xcodigo, fecha:xfecha, hora:xhora, descri:xdescri }, 
-				function(result){
-					if(result.success){
-						$.messager.alert("Mensaje", "requerimiento grabada EXITOSAMENTE!!!");
-						nuevo();
-
-					}else {
-						$.messager.alert("Mensaje", "problemas Compadre!!!");
-						
-					}
-				}
-			,'json');
-			
-		}
-		
-	</script>
-
-	<!-- funciones nuevo, cancelar, /////////////////////////////////////////////////////////////// -->
-	<script type="text/javascript">
-		function nuevo(){
-			$("#formulario-reque").form('clear');
-			botones(0,1,1);
-			campos(1);
-		}
-
-		function cancelar(){
-			$("#formulario-reque").form('clear');
-			botones(1,0,0);
-			campos(0);			
-		}
-	</script>
-
-	<!-- manejo de botones y campos /////////////////////////////////////////////////////////////// -->
-	<script type="text/javascript">
-		function campos(estado){
-			$("#fecha").datebox((estado==1)?'enable':'disable');
-			$("#hora").datebox((estado==1)?'enable':'disable');
-			$("#descripcion").datebox((estado==1)?'enable':'disable');
-
-		}
-
-		function botones(bnuevo, bcancelar, bgrabar){
-			$("#btnNuevo").linkbutton((bnuevo==1)?'enable':'disable');
-			$("#btnCancelar").linkbutton((bcancelar==1)?'enable':'disable');
-			$("#btnGrabar").linkbutton((bgrabar==1)?'enable':'disable');			
-
-		}
-	</script>
-
-	<!-- formato fechas/hora ////////////////////////////////////////////////////////////////////// -->
-	<script type="text/javascript">
-        function myformatter(date){
-            var y = date.getFullYear();
-            var m = date.getMonth()+1;
-            var d = date.getDate();
-            return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
-
-        }
-
-        function myparser(s){
-            if (!s) return new Date();
-            var ss = (s.split('-'));
-            var y = parseInt(ss[0],10);
-            var m = parseInt(ss[1],10);
-            var d = parseInt(ss[2],10);
-            if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
-                return new Date(y,m-1,d);
-            } else {
-                return new Date();
-            }
-
-        }
-
-		function quehora(){
-			var ahora = new Date();
-			var hora = ahora.getHours()+':'+ahora.getMinutes();
-			$('#hora').timespinner('setValue', hora);						
-		}
-
-	</script>
-</body>
-</html>
-
-                                       View Operador
-                                    
-  <!DOCTYPE html>
-<html>
-<head>
-	<title>HelpDesk - Operador</title>
-	<link href="http://localhost/proyecto/imagenes/helpdesk-ico-rev.ico" type="image/x-icon" rel="shortcut icon" />
-	<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/default/easyui.css">		
-	<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/proyecto/jeasyui/themes/icon.css">
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="<?= base_url();?>assets/proyecto/jeasyui/locale/easyui-lang-es.js"></script>
-   	
-	<link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/helpdesk.css">	
-	<link rel="stylesheet" href="<?= base_url();?>assets/proyecto/css/operador.css">
-
-</head>
-<body>
-	<div class="encabeza">
-		<table id="enc-tabla">
-			<tr>
-				<td id="enc-tabla-izq"><span class="titulo">JD sistemas</span></td>
-				<td id="enc-tabla-cen"><span class="titulo">Help Desk - OPERADOR</span></td>
-				<td id="enc-tabla-der">
-
-					<!-- DIV para manejo de variables globales que no sean mostradas ////////////// -->
-					<div style="display:none">
-						<input id="codigo" name="codigo" class="easyui-textbox" 
-							value="<?= $usuario['codigo'] ?>"
-							data-options="disabled:true">						
-					</div>
-					<!-- ////////////////////////////////////////////////////////////////////////// -->
-
-					<label>Usuario:</label>
-					<input id="usuario-fullname" name="usuario-fullname" class="easyui-textbox" 
-						value="<?= $usuario['nombres'].' '.$usuario['apellidos'] ?>"
-						data-options="disabled:true">					
-				</td>
-			</tr>
-		</table>
-	</div>
-
-	<!-- DIV logo de helpdesk ///////////////////////////////////////////////////////////////////// -->
-	<div class="logo-div">
-		<img src="http://localhost/proyecto/imagenes/helpdesk-ico-rev.png">	
-	</div>
-	
-	<!-- DIV formulario de datos para requerimiento /////////////////////////////////////////////// -->
-	<div class="formulario-div">
-		<table id="dgreque" class="easyui-datagrid" title="LISTADO DE REQUERIMIENTOS"
-					url="operador/listarReque"
-					pagination="false" fitColumns="true" singleSelect="true">
-			<thead>
-				<tr>
-					<th field="codigo" width="15">Cod</th>
-					<th field="fecha_inicio" width="35">FInicio</th>
-					<th field="hora_inicio" width="30">HInicio</th>
-					<th field="cod_usuario" width="40">Usuario</th>
-					<th field="descripcion" width="200">Descripcion</th>
-					<th field="cod_estado" width="15">Est</th>
-					<th field="cod_prioridad" width="15" align="right">Pri.</th>
-					<th field="cod_tecnico" width="15" align="right">Tec.</th>
-					<th field="informe" width="20" align="right">Informe</th>
-					<th field="fecha_fin" width="35" align="right">FFin</th>
-					<th field="hora_fin" width="30" align="right">HFin</th>
-				</tr>
-			</thead>
-
-		</table>
-
-	</div>
-
-	<!-- DIV dialog para detalle del requerimiento //////////////////////////////////////////////// -->
-	<div id="dlgdetalle" class="easyui-dialog" closed="true" buttons="#dlg-buttons"		
-		data-options = "modal:true" 		
-		style="width:40%;height:480px;padding:2%">
-		<form id="frmdetalle">
-			<div class="fitem">
-				<label>Fecha:</label>
-				<input id="fecha_inicio" name="fecha_inicio" class="easyui-datebox" 			 
-					data-options="disabled:true" 
-				>
-				<label>Hora:</label>
-				<input id="hora_inicio" name="hora_inicio" class="easyui-timespinner"		 
-					data-options="disabled:true" 
-				>
-			</div>
-			<div class="fitem">
-				<label>Codigo:</label>
-				<input id="codigo" name="codigo" class="easyui-textbox" 			 
-					data-options="disabled:true" 
-				>			
-			</div>
-
-			<div class="ftitle">Descripcion</div>
-
-			<div class="fitem">			
-				<input id="descripcion" name="descripcion" class="easyui-textbox" style="width:580px;height:50px"
-					data-options="disabled:true,multiline:true" 
-				>			
-			</div>
-		</form>
-
-
-	</div>
-
-	<!-- SCRITP control de eventos //////////////////////////////////////////////////////////////// -->
-	<script type="text/javascript">
-		$("#dgreque").datagrid({
-			onDblClickRow: function(){
-				detalleReque();
-
-			}
-
-		})
-	</script>
-
-	<script type="text/javascript">
-		function detalleReque(){
-			var row = $("#dgreque").datagrid('getSelected');
-
-			// extraer codigo de requerimiento
-			var xcodigo = row['codigo'];
-			mostrarWin(xcodigo);
-
-			$("#frmdetalle").form('load', row);
-
-
-
-
-		}
-
-		function mostrarWin(pcodigo){
-			$("#dlgdetalle").dialog('hcenter');
-			$("#dlgdetalle").dialog('vcenter');
-			$("#dlgdetalle").dialog('setTitle', '<font color=black>REQUERIMIENTO - '+pcodigo+'</font>').dialog('open');
-		}
-	</script>
-
-</body>
+    <div class="usuario-div">   
+      <!-- PANEL para captura de datos -jeasyui - /////////////////////////////////////////////// -->
+      <div id="usuario-pnl" class="easyui-panel" title="ACCESO" 
+        data-options="collapsible:true">
+        <form id="usuario-frm" method="post" action="Login/validar">
+          <div class="fitem">
+            <label>USUARIO:</label>
+            <input tipe="text" name="email" placeholder="Email">
+          </div>
+          <div class="fitem">
+            <label>CLAVE:</label>
+            <input type="password" name="clave" placeholder="Clave" >
+             </div>
+            <button align="center" class="button button2">Login</button>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
