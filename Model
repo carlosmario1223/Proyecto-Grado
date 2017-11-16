@@ -1,72 +1,20 @@
                     Model_usuario
                     
- <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Model_usuario extends CI_Model {
+class Usuarios extends CI_Model {
 
-	public function get_data(){		
-		$query = $this->db->get('usuarios');
-		if($query->num_rows()>0){
-			return $query->result();
-		}else {
-			return FALSE;
-		}
+	public function __construct() {
+        
 	}
 
-	public function get_usuario($codigo,$clave){
+	public function insertar($dato) {
+		return $this->db->insert('usuarios', $dato);
+	}
+	public function existe($email, $clave) {
 		$this->db->from('usuarios');
-		$this->db->where('codigo', $codigo);
-		$this->db->where('clave', $clave);
-		$query = $this->db->get();
-		return $query->result_array();
-		
+		$this->db->where(compact('email'));
+		return ($this->db->count_all_results() > 0) ? TRUE : FALSE;
 	}
-	
+
 }
-
-?>
-
-
-                              Model_reque
-                              
-   <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Model_reque extends CI_Model {
-	function __construct(){
-		parent::__construct();		
-
-	}
-
-	function grabarRegistro($data){
-		$this->db->insert('requerimientos', array(
-			'cod_usuario' 	=> $data['codigo'],
-			'fecha_inicio' 	=> $data['fecha'],
-			'hora_inicio' 	=> $data['hora'],
-			'descripcion' 	=> $data['descri']
-			)
-		);
-
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		}
-		else{
-			return false;
-		}
-
-	}
-
-	function listarRegistros(){
-		$query = $this->db->get('requerimientos');
-		if($query->num_rows()>0){
-			return $query->result();
-		}else {
-			return FALSE;
-		}
-
-	}
-	
-}
-
-?>                           
