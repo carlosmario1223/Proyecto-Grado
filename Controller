@@ -3,186 +3,72 @@
     <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
-	function __construct(){
-		parent::__construct();
-		$this->load->model('helpdesk/model_usuario');
 
+
+	function __construct() {
+        	parent::__construct();
+    	}
+
+	public function index() {
+		$this->load->view('login/entrada');
 	}
 
-	function index(){
-		$this->load->view('helpdesk/login');
+	// INICIO FUNCIONES DE USUARIOS
+
+	public function validar() {
+		if ( ! $this->input->post('email') && ! $this->input->post('clave'))
+		{
 		
-	}
-
-	public function usuario_data(){
-		header('Content-type: application/json');
-
-		$codigo = $this->input->post('codigo');
-		$clave = $this->input->post('clave');
-
-		$usuarios = $this->model_usuario->get_usuario($codigo,$clave);
-
-		if($usuarios){
-			$success = true;		
-		
-			foreach ($usuarios as $usuario) {
-				$nombres = $usuario['nombres'];
-				$apellidos = $usuario['apellidos'];
-			}
-
-			// crear vector asociativo de retorno para datos del usuario
-			$items = array(
-				'nombres' => $nombres,
-				'apellidos' => $apellidos
-			);
-
-			echo json_encode(array('success'=>$success,'nombres'=>$nombres,'apellidos'=>$apellidos,'items'=>$items));
-
-		}else {
-			$success = false;
-
-			echo json_encode(array('success'=>$success));
-
-		}
-	}
-
-}
-
-?>
-
-                                            Controller reque
-                                            
-      <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Reque extends CI_Controller {
-	function __construct(){
-		parent::__construct();
-		$this->load->model('helpdesk/model_reque');
-
-	}
-
-	function index(){		
-		$data['usuarios'] = array(
-			'codigo' => '10004926',
-			'nombres' => 'Carlos Mario',
-			'apellidos' => 'Vanegas Toro'
-		);
-		
-		$this->load->view('helpdesk/reque', $data);
-		
-	}
-
-	public function grabarReque(){
-		$codigo = $this->input->post('codigo');
-		$fecha = $this->input->post('fecha');
-		$hora = $this->input->post('hora');
-		$descri = $this->input->post('descri');
-
-		$data = array(
-			'codigo' => $codigo,
-			'fecha' => $fecha,
-			'hora' => $hora,
-			'descri' => $descri
-		);
-
-		$success = $this->model_reque->grabarRegistro($data);		
-
-		echo json_encode(array('success'=>$success));
-
-
-	}
-}
-
-?>	
-
-                          Controller operador
-                          
-      <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Operador extends CI_Controller {
-	function __construct(){
-		parent::__construct();
-		$this->load->model('helpdesk/model_reque');
-
-	}
-
-	function index(){
-		$data['usuario'] = array(
-			'codigo' => '91256362',
-			'nombres' => 'Hector Manuel',
-			'apellidos' => 'Patino Torres'
-		);
-
-		$this->load->view('helpdesk/operador', $data);
-		
-	}
-
-	public function listarReque(){
-		header('Content-type: application/json');
-    	echo json_encode($this->model_reque->listarRegistros());
-
-	}
-}
-
-?>
-
-                    Controller prueba
-                    
-    <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Prueba extends CI_Controller {
-	function __construct(){
-		parent::__construct();
-		$this->load->model('model_demo');
-
-	}
-
-	function index(){
-		$this->load->view('prueba');
-	}
-
-	public function ambil_data(){
-		header('Content-type: application/json');
-    	echo json_encode($this->model_demo->get_data());
-	}
-
-	public function usuario_data(){
-		header('Content-type: application/json');
-
-		$codigo = $this->input->post('codigo');
-
-		$usuarios = $this->model_demo->get_usuario($codigo);
-
-		if($usuarios){
-			$success = true;		
-		
-			foreach ($usuarios as $usuario) {
-				$nombres = $usuario['nombres'];
-				$apellidos = $usuario['apellidos'];
-			}
-
+		} else {
+			$email = $this->input->post('email');
+			$clave = $this->input->post('clave');
 			
-			$items = array(
-				'nombres' => $nombres,
-				'apellidos' => $apellidos
-			);
-
-			echo json_encode(array('success'=>$success,'nombres'=>$nombres,'apellidos'=>$apellidos,'items'=>$items));
-
-		}else {
-			$success = false;
-
-			echo json_encode(array('success'=>$success));
-
+			if($this->Usuarios->existe($email, $clave)) {
+				
+				$this->load->view('login/error');
+			}
+			
+			else{
+				$this->load->view('campo/usuario');
+			}
+			
 		}
-
 		
-		
-
-    	
-
-    	//echo json_encode($this->model_demo->get_usuario());
 	}
-}
+	public function crear_tec() {
+		$this->load->view('view_gerente/crear_tecnico');
+	}
+	public function crear_usu() {
+		$this->load->view('registrar');
+	}
+	public function asignar() {
+		$this->load->view('view_gerente/asignar_rq');
+	}
+	public function informes() {
+		$this->load->view('view_gerente/informes_rq');
+	}
+	public function consultar_rqt() {
+		$this->load->view('view_tecnico/consultar');
+	}
+	public function generar_inft() {
+		$this->load->view('view_tecnico/informes');
+	}
+	public function operar_rqt() {
+		$this->load->view('view_tecnico/operar');
+	}
+	public function campo() {
+		$this->load->view('campo/usuario');
+	}
+	public function crear() {
+		$this->load->view('view_usuario/crear');
+	}
+	public function requerimiento() {
+		$this->load->view('view_usuario/crear');
+	}
+	public function consultar_rqu() {
+		$this->load->view('view_usuario/consultar');
+	}
 
-?>
+	
+	
+	}
